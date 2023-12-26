@@ -3,7 +3,8 @@ name: reusable action test for echo-ing a message
 on:
   workflow_call:
 
-jobs:
+runs:
+  
   build:
     runs-on: ubuntu-latest
 
