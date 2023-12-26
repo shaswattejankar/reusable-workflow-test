@@ -12,4 +12,5 @@ runs:
 
     # Runs a single command using the runner's shell
     - name: Run a one-line script
+      shell: bash
       run: echo "Hello, reusable workflow is successfully called!"
