@@ -30,6 +30,21 @@ jobs:
           aws-access-key-id: ${{ secrets.aws-access-key-id }}
           aws-secret-access-key: ${{ secrets.aws-secret-access-key }}
           aws-region: us-east-2
+          
+      - name: setup node 
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+        
+      - name: Install dependencies
+        run: | 
+          npm install
+          npm ci
+        shell: bash
+        
+      - name: Build app
+        run: npm run build
+        shell: bash
         
       - name: Upload app to AWS S3
         run: aws s3 sync build s3://reusable-workflows-test --delete
