@@ -9,6 +9,12 @@ on:
       aws-secret-access-key:
        required: true
        description: "The aws-secret-access-key used to authenticate with AWS"
+      aws-s3-bucket:
+       required: true
+       description: the name of the s3 bucket to sync/put the build files as objects
+      aws-region:
+       required: true
+       description: region of the s3 bucket
 
 jobs:
   echo_then_use_node:
@@ -29,7 +35,7 @@ jobs:
           # Actions cannot access secrets so pass them in as inputs
           aws-access-key-id: ${{ secrets.aws-access-key-id }}
           aws-secret-access-key: ${{ secrets.aws-secret-access-key }}
-          aws-region: us-east-2
+          aws-region: ${{ secrets.aws-region }}
           
       - name: setup node 
         uses: actions/setup-node@v4
@@ -45,5 +51,5 @@ jobs:
         shell: bash
         
       - name: Upload app to AWS S3
-        run: aws s3 sync build s3://reusable-workflows-test --delete
+        run: aws s3 sync build s3://${{ secrets.aws-s3-bucket }} --delete
         shell: bash
