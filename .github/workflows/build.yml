@@ -1,0 +1,28 @@
+name: reusable action for echo-ing a message and running npm commands
+
+on:
+  workflow_call:
+
+jobs:
+  echo_then_use_node:
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # - uses: actions/checkout@v4
+  
+      # Runs a single command using the runner's shell
+      - name: Run a one-line script
+        shell: bash
+        run: echo "Hello, reusable workflow is successfully called!"
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: npm commands
+        run: |
+          echo "running npm commands now..."
+          npm ci
+          npm run build
+          echo "...done!"
+        shell: bash
